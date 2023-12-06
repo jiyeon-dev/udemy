@@ -5,5 +5,6 @@ Projects from Udemy Lectures
 ## [React 18 Tutorial and Projects Course (2023)](https://www.udemy.com/course/react-tutorial-and-projects-course/)
 
 - Project #1. backroad-app [source](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/backroad-app>)
-
-- Project #2.
+  - props 활용 프로젝트
+- Project #2. birthdayBuddy-app [source](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/birthdayBuddy-app>)
+  - useState 활용 프로젝트
