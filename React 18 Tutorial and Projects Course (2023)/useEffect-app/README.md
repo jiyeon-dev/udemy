@@ -27,3 +27,11 @@ https://www.figma.com/file/e8L2QiR4GVTa5cGuRpXtk3/Reviews?node-id=0%3A1&t=gcCYce
 ##### Figma
 
 https://www.figma.com/file/TAwJ3kWOqkw0o8UVtAMOHO/Accordion?node-id=0%3A1&t=1YEti8xBykw69tBH-1
+
+## 4. Menu
+
+[소스코드](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/useEffect-app/src/04-Menu>)
+
+##### Figma
+
+https://www.figma.com/file/PwlnSJXCuo4qD2o6EJiuj9/Menu?node-id=0%3A1&t=oaKVwYVqc9Oon2Ts-1
