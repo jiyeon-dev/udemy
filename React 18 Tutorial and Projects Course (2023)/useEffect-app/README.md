@@ -43,3 +43,11 @@ https://www.figma.com/file/PwlnSJXCuo4qD2o6EJiuj9/Menu?node-id=0%3A1&t=oaKVwYVqc
 ##### Figma
 
 https://www.figma.com/file/FJC19b9eUWS62HKR8L9Dmn/Tabs?node-id=0%3A1&t=8Rio02EFK1r9ItDW-1
+
+## 6. Slider
+
+[소스코드](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/useEffect-app/src/06-Slider>)
+
+##### Figma
+
+https://www.figma.com/file/QfMzzThSYmgabSvn4t8Yfe/Slider?node-id=0%3A1&t=IpsYjMUn3Xj3Hs3N-1
