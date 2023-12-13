@@ -15,4 +15,8 @@ Projects from Udemy Lectures
   - useEffect 활용 프로젝트들
 
 - Project #4. colorGenerator-app [source](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/colorGenerator-app>)
-  - Form 활용 프로젝트
+
+  - Form 활용 프로젝트 #1
+
+- Project #5. groceryBud-app [source](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/groceryBud-app>)
+  - Form 활용 프로젝트 #2
