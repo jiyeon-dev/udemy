@@ -27,4 +27,9 @@ Projects from Udemy Lectures
   - useRef 활용 프로젝트
 
 - Project #7 sidebar-app [source](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/sidebar-app>)
+
   - contextApi 활용 프로젝트 #1
+
+- Project #8 strapi-submenus-app [source](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/strapi-submenus-app>)
+
+  - contextApi 활용 프로젝트 #2
