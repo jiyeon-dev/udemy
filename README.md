@@ -33,3 +33,7 @@ Projects from Udemy Lectures
 - Project #8 strapi-submenus-app [source](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/strapi-submenus-app>)
 
   - contextApi 활용 프로젝트 #2
+
+- Project #9 cart-app [source](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/cart-app>)
+
+  - useReducer 활용 프로젝트
