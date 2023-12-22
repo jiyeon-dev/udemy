@@ -1,30 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import customFetch from "./utils";
 import { toast } from "react-toastify";
+import { useEditTask, useDeleteTask } from "./reactQueryCustomHooks";
 
 const SingleItem = ({ item }) => {
-  const queryClient = useQueryClient();
-
-  const { mutate: editTask } = useMutation({
-    mutationFn: ({ taskId, isDone }) =>
-      customFetch.patch(`/${taskId}`, { isDone }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
-    },
-    onError: (error) => {
-      toast.error(error.response.data.msg);
-    },
-  });
-
-  const { mutate: deleteTask, isPending } = useMutation({
-    mutationFn: (taskId) => customFetch.delete(`/${taskId}`),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
-    },
-    onError: (error) => {
-      toast.error(error.response.data.msg);
-    },
-  });
+  const { editTask } = useEditTask();
+  const { deleteTask, deleteTaskLoading } = useDeleteTask();
 
   return (
     <div className='single-item'>
@@ -44,7 +23,7 @@ const SingleItem = ({ item }) => {
       <button
         className='btn remove-btn'
         type='button'
-        disabled={isPending}
+        disabled={deleteTaskLoading}
         onClick={() => deleteTask(item.id)}
       >
         delete
