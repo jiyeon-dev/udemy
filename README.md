@@ -40,8 +40,12 @@ Projects from Udemy Lectures
 
 - Project #10 taskBud-app [source](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/taskBud-app>)
 
-  - react-query 활용 프로젝트
+  - react-query 활용 프로젝트 #1
 
 - Project #11 unsplash images [source](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/unsplash-images>)
 
-  - react-query 활용 프로젝트 (2)
+  - react-query 활용 프로젝트 #2
+
+- Project #12 MixMaster app [source](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/mixmaster-app>)
+
+  - react router dom + react query 활용 프로젝트
