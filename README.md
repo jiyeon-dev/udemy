@@ -58,3 +58,10 @@ Projects from Udemy Lectures
   - Structuring Components and State
   - Advanced State Usage
   - Patterns & Best Practices
+
+- Project #2 Investment-Calculator [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/02-investment-calculator)
+
+  - Build an "Investment Calculator" Web app
+  - Build, Configure & Combine Components
+  - Manage Application State
+  - Output List & Conditional Content
