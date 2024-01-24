@@ -5,8 +5,6 @@ const initialGameBoard = [
 ];
 
 export default function GameBoard({ onClickSquare, board }) {
-  console.log("GameBoard component rendered");
-
   return (
     <ol id='game-board'>
       {board.map((row, rowIndex) => (

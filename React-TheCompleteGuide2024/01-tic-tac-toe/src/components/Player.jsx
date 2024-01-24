@@ -6,7 +6,6 @@ export default function Player({
   isActive,
   onChangeName,
 }) {
-  console.log("Player component rendered - ", initialName);
   const [playerName, setPlayerName] = useState(initialName);
   const [isEditing, setIsEditing] = useState(false);
 
