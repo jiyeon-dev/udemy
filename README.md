@@ -49,3 +49,12 @@ Projects from Udemy Lectures
 - Project #12 MixMaster app [source](<https://github.com/jiyeon-dev/udemy/tree/main/React%2018%20Tutorial%20and%20Projects%20Course%20(2023)/mixmaster-app>)
 
   - react router dom + react query 활용 프로젝트
+
+## [React - The Complete Guide 2024](https://www.udemy.com/course/best-react/)
+
+- Project #1 tic-tac-toe [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/01-tic-tac-toe)
+
+  - Behind the scenes of JSX
+  - Structuring Components and State
+  - Advanced State Usage
+  - Patterns & Best Practices
