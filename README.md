@@ -65,3 +65,7 @@ Projects from Udemy Lectures
   - Build, Configure & Combine Components
   - Manage Application State
   - Output List & Conditional Content
+
+- Project #3 CountDown Game [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/03-countdown)
+
+  - Learn Refs & Portals
