@@ -69,3 +69,9 @@ Projects from Udemy Lectures
 - Project #3 CountDown Game [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/03-countdown)
 
   - Learn Refs & Portals
+
+- Project #4 Project Management App [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/04-project-management-app)
+  - build, style(tailwind css), configure & re-use components
+  - manage state
+  - access DOM elements & browser APIs with Refs
+  - manage JSX rendering positions with portals
