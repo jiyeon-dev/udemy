@@ -71,7 +71,12 @@ Projects from Udemy Lectures
   - Learn Refs & Portals
 
 - Project #4 Project Management App [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/04-project-management-app)
+
   - build, style(tailwind css), configure & re-use components
   - manage state
   - access DOM elements & browser APIs with Refs
   - manage JSX rendering positions with portals
+
+- Project #5 Shopping Cart [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/05-shopping-cart)
+
+  - Learn Context API
