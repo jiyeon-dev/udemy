@@ -83,5 +83,11 @@ Projects from Udemy Lectures
 
 - Project #6 Place Picker [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/06-place-picker)
 
-  - Learn useEffect Hook
+  - Learn useEffect, useCallback Hook
   - Dealing with side effects
+
+- Project #7 Quiz App [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/07-quiz-app)
+
+  - Practice & Dive Deeper
+  - Dealing with Effect Dependencies & Cleanup
+  - Combining Effects with other React Concepts
