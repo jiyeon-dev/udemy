@@ -80,3 +80,8 @@ Projects from Udemy Lectures
 - Project #5 Shopping Cart [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/05-shopping-cart)
 
   - Learn Context API
+
+- Project #6 Place Picker [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/06-place-picker)
+
+  - Learn useEffect Hook
+  - Dealing with side effects
