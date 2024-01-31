@@ -32,6 +32,13 @@ const Counter = memo(function Counter({ initialCount }) {
     [initialCount]
   );
 
+  // initialCount를 counter 초기값으로 설정하는 방법 - useEffect - 하지만 useEffect사용은 제한하기를 권장하기 때문에 주석처리함.
+  // (useEffect는 추가적인 컴포넌트 실행을 요구하기 때문에 사용 안하는 것을 추천)
+  // Counter 컴포넌트에 key를 설정하는 걸 더 추천함.
+  // useEffect(() => {
+  //   setCounterChanges([{ value: initialCount, id: Math.random() * 1000 }]);
+  // }, [initialCount]);
+
   // const [counter, setCounter] = useState(initialCount);
   const [counterChanges, setCounterChanges] = useState([
     { value: initialCount, id: Math.random() * 1000 },
