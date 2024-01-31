@@ -91,3 +91,11 @@ Projects from Udemy Lectures
   - Practice & Dive Deeper
   - Dealing with Effect Dependencies & Cleanup
   - Combining Effects with other React Concepts
+
+- Project #8 Behind the Scenes [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/08-behind-scenes)
+
+  - UnderStanding & Optimizing React
+  - How React Updates The DOM.
+  - Avoiding Unnecessary Updates
+  - A Closer Look At Keys.
+  - State Scheduling & State Batching
