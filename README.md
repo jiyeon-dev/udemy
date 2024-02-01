@@ -106,3 +106,9 @@ Projects from Udemy Lectures
   - Create & using custom react hooks
 
 > Project's UI is the same as the previous one [Project #6 Place Picker](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/06-place-picker). But, there's a change in how data is handled—from localStorage to the Backend Node Server.
+
+- Project #10 React Forms [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/10-react-forms)
+
+  - handling form submission & validating user input
+  - using built-in form features
+  - building custom solutions
