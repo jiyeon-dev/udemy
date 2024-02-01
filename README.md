@@ -112,3 +112,7 @@ Projects from Udemy Lectures
   - handling form submission & validating user input
   - using built-in form features
   - building custom solutions
+
+- Project #11 Food Order App [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/11-food-order)
+
+  - Using Components, state, context, effects, HTTP requests & more!
