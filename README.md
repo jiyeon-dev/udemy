@@ -99,3 +99,12 @@ Projects from Udemy Lectures
   - Avoiding Unnecessary Updates
   - A Closer Look At Keys.
   - State Scheduling & State Batching
+
+- Project #9 Sending requests [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/09-sending-requests)
+
+  - Sending & Receiving Data via HTTP
+  - How to Connect a backend / Database
+  - Fetching Data
+  - Sending Data
+
+> Project's UI is the same as the previous one [Project #6 Place Picker](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/06-place-picker). But, there's a change in how data is handled—from localStorage to the Backend Node Server.
