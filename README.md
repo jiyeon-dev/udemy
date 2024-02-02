@@ -116,3 +116,7 @@ Projects from Udemy Lectures
 - Project #11 Food Order App [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/11-food-order)
 
   - Using Components, state, context, effects, HTTP requests & more!
+
+- Project #12 React Test (Jest) [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/12-react-test)
+
+  - React Test - Jest
