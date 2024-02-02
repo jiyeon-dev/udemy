@@ -1,4 +1,12 @@
+import { useCartContext } from "../contexts/Cart";
+
 export default function MealItem({ meal }) {
+  const { addItem } = useCartContext();
+
+  const handleClick = (meal) => {
+    addItem(meal);
+  };
+
   return (
     <li className='meal-item'>
       <article>
@@ -11,7 +19,9 @@ export default function MealItem({ meal }) {
         </div>
 
         <div className='meal-item-actions'>
-          <button className='button'>Add to Cart</button>
+          <button className='button' onClick={() => handleClick(meal)}>
+            Add to Cart
+          </button>
         </div>
       </article>
     </li>

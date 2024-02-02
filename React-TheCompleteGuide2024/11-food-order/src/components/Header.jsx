@@ -1,6 +1,10 @@
 import logo from "../assets/logo.jpg";
+import { useCartContext } from "../contexts/Cart";
 
 export default function Header() {
+  const { items } = useCartContext();
+  const total = items.reduce((acc, cur) => acc + cur.quantity, 0);
+
   return (
     <div id='main-header'>
       <div id='title'>
@@ -9,7 +13,7 @@ export default function Header() {
       </div>
       <nav>
         <button type='button' className='text-button'>
-          Cart (0)
+          Cart ({total})
         </button>
       </nav>
     </div>
