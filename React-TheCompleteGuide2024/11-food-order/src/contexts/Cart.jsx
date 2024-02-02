@@ -55,6 +55,13 @@ function cartReducer(state, action) {
     return { ...state, items: updatedItems };
   }
 
+  if (action.type === "CLEAR") {
+    /**
+     * 장바구니 아이템 전체 삭제
+     */
+    return { ...state, items: [] };
+  }
+
   return { ...state };
 }
 
@@ -69,12 +76,17 @@ export default function CartContextProvider({ children }) {
     cartDispatch({ type: "REMOVE_ITEM", payload: { id } });
   };
 
+  const clearCart = () => {
+    cartDispatch({ type: "CLEAR" });
+  };
+
   return (
     <CartContext.Provider
       value={{
         items: cartState.items,
         addItem: handleAddItem,
         removeItem: handelRemoveItem,
+        clearCart,
       }}
     >
       {children}

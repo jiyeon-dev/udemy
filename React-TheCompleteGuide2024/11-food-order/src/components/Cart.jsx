@@ -5,13 +5,16 @@ import { useUserProgressContext } from "../contexts/UserProgress";
 
 export default function Cart() {
   const { items, addItem, removeItem } = useCartContext();
-  const { progress, hideCart } = useUserProgressContext();
+  const { progress, hideCart, showCheckout } = useUserProgressContext();
 
   const openModal = progress === "cart";
-  const totalCost = items.reduce((acc, cur) => acc + +cur.price, 0);
+  const totalCost = items.reduce(
+    (acc, cur) => acc + +cur.quantity * cur.price,
+    0
+  );
 
   return (
-    <Modal open={openModal} className='cart' onClose={hideCart}>
+    <Modal open={openModal} className='cart'>
       <h2>Your Cart</h2>
       <ul>
         {items.map((item) => (
@@ -28,7 +31,11 @@ export default function Cart() {
         <button className='text-button' onClick={hideCart}>
           Close
         </button>
-        <button className='button'>Go to Checkout</button>
+        {items.length > 0 && (
+          <button className='button' onClick={showCheckout}>
+            Go to Checkout
+          </button>
+        )}
       </div>
     </Modal>
   );
