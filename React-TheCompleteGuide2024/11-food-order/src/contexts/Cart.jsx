@@ -38,7 +38,7 @@ function cartReducer(state, action) {
      * - 기존 개수가 2개 이상인 경우 -> quantity - 1
      */
     const existItemIndex = state.items.findIndex(
-      (item) => item.id === action.payload.item.id
+      (item) => item.id === action.payload.id
     );
     const existItem = state.items[existItemIndex];
 
