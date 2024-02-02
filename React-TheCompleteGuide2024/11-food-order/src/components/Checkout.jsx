@@ -4,6 +4,7 @@ import { useHttp } from "../hooks/useHttp";
 import Input from "./UI/Input";
 import Modal from "./UI/Modal";
 import Error from "./Error";
+import Button from "./UI/Button";
 
 const requestConfig = {
   method: "POST",
@@ -63,9 +64,7 @@ export default function Checkout() {
           few minutes.
         </p>
         <p className='modal-actions'>
-          <button className='button' onClick={handleFinish}>
-            Okay
-          </button>
+          <Button onClick={handleFinish}>Okay</Button>
         </p>
       </Modal>
     );
@@ -96,14 +95,10 @@ export default function Checkout() {
             <span>Sending order data...</span>
           ) : (
             <>
-              <button
-                type='reset'
-                className='text-button'
-                onClick={handleClose}
-              >
+              <Button type='button' textOnly onClick={handleClose}>
                 Close
-              </button>
-              <button className='button'>Submit Order</button>
+              </Button>
+              <Button>Submit Order</Button>
             </>
           )}
         </div>

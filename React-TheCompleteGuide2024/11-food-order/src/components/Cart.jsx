@@ -2,6 +2,8 @@ import { useCartContext } from "../contexts/Cart";
 import CartItem from "./CartItem";
 import Modal from "./UI/Modal";
 import { useUserProgressContext } from "../contexts/UserProgress";
+import { currencyFormatter } from "../util/formatting";
+import Button from "./UI/Button";
 
 export default function Cart() {
   const { items, addItem, removeItem } = useCartContext();
@@ -26,15 +28,13 @@ export default function Cart() {
           />
         ))}
       </ul>
-      <p className='cart-total'>${totalCost}</p>
+      <p className='cart-total'>{currencyFormatter.format(totalCost)}</p>
       <div className='modal-actions'>
-        <button className='text-button' onClick={hideCart}>
+        <Button textOnly onClick={hideCart}>
           Close
-        </button>
+        </Button>
         {items.length > 0 && (
-          <button className='button' onClick={showCheckout}>
-            Go to Checkout
-          </button>
+          <Button onClick={showCheckout}>Go to Checkout</Button>
         )}
       </div>
     </Modal>

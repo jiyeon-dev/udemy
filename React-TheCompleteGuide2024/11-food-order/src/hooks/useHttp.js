@@ -1,25 +1,27 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 export const useHttp = (url, config, initialValue) => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(undefined);
   const [data, setData] = useState(initialValue);
 
-  const sendRequest = async (data) => {
-    setIsLoading(true);
-    setError(undefined);
+  const sendRequest = useCallback(
+    async (data) => {
+      setIsLoading(true);
+      setError(undefined);
 
-    try {
-      const response = await fetch(url, { ...config, body: data });
-      const resData = await response.json();
-      setData(resData);
-    } catch (error) {
-      console.log(error);
-      setError(error.message || "ERROR!!");
-    }
+      try {
+        const response = await fetch(url, { ...config, body: data });
+        const resData = await response.json();
+        setData(resData);
+      } catch (error) {
+        setError(error.message || "ERROR!!");
+      }
 
-    setIsLoading(false);
-  };
+      setIsLoading(false);
+    },
+    [url, config]
+  );
 
   const clearData = () => {
     setData(initialValue);
@@ -29,7 +31,7 @@ export const useHttp = (url, config, initialValue) => {
     if ((config && (config.method === "GET" || !config.method)) || !config) {
       sendRequest();
     }
-  }, [url, config]);
+  }, [sendRequest, config]);
 
   return {
     data,

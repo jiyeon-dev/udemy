@@ -29,3 +29,7 @@ $ node app.js
 4. Allow users to add & remove products to / form the cart
 5. Send cart data along with user data (full name, email, street, postal code, city) to the backend(POST /orders)
 6. Handle loading & error states
+
+## result
+
+![result](https://github.com/jiyeon-dev/udemy/assets/65294323/f955f8b4-ff79-4bc2-ba5c-8f1166048224)
