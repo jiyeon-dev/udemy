@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import { counterActions } from "../store/index";
 import classes from "./Counter.module.css";
 
 const Counter = () => {
@@ -7,17 +8,17 @@ const Counter = () => {
   const show = useSelector((state) => state.showCounter);
 
   const incrementHandler = () => {
-    dispatch({ type: "increment" });
+    dispatch(counterActions.increment());
   };
   const increaseHandler = (num) => {
-    dispatch({ type: "increase", amount: num });
+    dispatch(counterActions.increase(num)); // 무슨 값이든 전달해주면 됨. 그러면 payload인 곳에 자동으로 저장됨 { type: SOME_UNIQUE_ IDENTIFIER, payload: 10 }
   };
   const decrementHandler = () => {
-    dispatch({ type: "decrement" });
+    dispatch(counterActions.decrement());
   };
 
   const toggleCounterHandler = () => {
-    dispatch({ type: "toggle" });
+    dispatch(counterActions.toggleCounter());
   };
 
   return (
