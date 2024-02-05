@@ -120,3 +120,7 @@ Projects from Udemy Lectures
 - Project #12 React Test (Jest) [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/12-react-test)
 
   - React Test - Jest
+
+- Project #13 Redux basic start [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/13-redux-basic-start)
+
+  - Learn Redux
