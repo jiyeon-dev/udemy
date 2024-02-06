@@ -181,6 +181,8 @@ useSelector를 사용할 때 react-redux는 이 컴포넌트를 위해 리덕스
 
 dispatch 훅을 이용하면 실행할 수 있는 디스패치 함수를 반환함.
 
+- action은 오타나면 안됨. 이름이 중복되면 안됨.
+
 ```jsx
 import { useSelector, useDispatch } from "react-redux";
 const dispatch = useDispatch();
@@ -347,3 +349,141 @@ const counterReducer = (state = initialState, action) => {
 [참고](https://academind.com/tutorials/reference-vs-primitive-values)
 
 따라서 중첩된 객체를 복사하거나 삭제할 때는 항상 새로운 객체를 반환해야함. "항상 새 값을 생성"해야함.
+
+## 액션 중복 충돌 막는 방법
+
+액션 이름은 오타가 나거나 충돌이 나서는 안됨. 그걸 해결하기 위해서는 몇가지 있음.
+
+1. 액션 타입을 상수로 저장
+
+```jsx
+export INCREMENT = 'increment';
+
+const initialState = { counter: 0, showCounter: true };
+const counterReducer = (state = initialState, action) => {
+  if (action.type === INCREMENT) {
+    return {
+      ...state,
+      counter: state.counter + 1,
+    };
+  }
+  return state;
+}
+
+import { useSelector, useDispatch } from "react-redux";
+import classes from "./Counter.module.css";
+import { INCREMENT } from "../store/index.js"
+
+const Counter = () => {
+  const dispatch = useDispatch();
+  const counter = useSelector((state) => state.counter);
+
+  const incrementHandler = () => {
+    dispatch({ type: INCREMENT });
+  };
+  // ...
+}
+```
+
+2. 리듀서를 작게 나눔.
+
+3. redux-toolkit 사용.
+   추가적인 패키지임. 리덕스를 더 편리하고 쉽게 작동할 수 있게 함.
+
+## redux-toolkit
+
+리덕스의 몇 가지 특징을 단순화한 툴킷임.
+
+```npm
+$ npm install @reduxjs/toolkit
+```
+
+```js
+import { createReducer, createSlice } from "@reduxjs/toolkit";
+```
+
+- createReducer / createSlice : createSlice가 좀더 강력함. createSlice는 한 번에 몇가지를 단순화함.
+
+전역 상태의 slice를 미리 만듦. 서로 직접적인 관계가 아닌 상태가 여러 조각으로 나뉘어져 있다면 slice를 만드는 것임.
+
+> 인증 slice, counter slice 등 생성해서 서로 다른 파일에 위치하겠지만 코드를 유지보수하기 쉽게 만들 것임.
+
+### createSlice
+
+- name: 상태마다 식별자. 필수 값.
+- initialState: 초기 값
+- reducers: 객체(혹은 맵) 리듀서
+  - 매서드 추가, 메서드 명은 중요함 "액션 명 = 메서드명"
+  - 메서드 파라메터로 현재 state상태를 받음.
+  - 어떤 액션을 했냐에 따라 이 메서드가 실행될 것이기 때문에 action 파라메터는 필요 없음.
+  - ```js
+    function increment(state) {
+      state.counter++;
+    }
+    ```
+    당연히 리덕스에서는 기존 state값을 변경하는 `state.counter++`코드는 사용하면 안되지만,  
+    리덕스 툴킷 내 immer 패키지가 기존 상태를 변경하는 코드를 감지하고 자동으로 원래 있는 상태를 복제하고 새로운 상태를 생성해서 모든 상태를 변경할 수 없게 유지하고, 우리가 변경한 상태는 변하지 않도록 오버라이드함.  
+    그래서 redux-toolkit을 사용하면 내부적으로 알아서 변경할 수 없는 코드로 변환하기 때문에 더이상 불변성을 신경쓸 필요 없이 사용할 수 있음.
+  - 추가 데이터(payload)가 필요한 경우 이전처럼 action을 사용하면 됨
+    ```js
+    function increase(state, action) {
+      state.counter = state.counter + action.amount;
+    }
+    ```
+
+**결과 화면**
+
+```js
+import { createStore } from "redux";
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = { counter: 0, showCounter: true };
+
+const counterSlice = createSlice({
+  name: "counter",
+  initialState: initialState,
+  reducers: {
+    increment(state) {
+      state.counter++;
+    },
+    decrement(state) {
+      state.counter--;
+    },
+    increase(state, action) {
+      state.counter = state.counter + action.amount;
+    },
+    toggleCounter(state) {
+      state.showCounter = !state.showCounter;
+    },
+  },
+});
+
+const store = createStore(counterSlice.reducer);
+
+export default store;
+```
+
+- configureStore : 여러개의 리듀서를 하나의 리듀서로 합칠 때 사용.
+  - 리덕스는 하나의 리듀서만 허용함.
+  ```js
+  const store = configureStore({ reducer: counterSlice.reducer });
+  ```
+  - 만약, slice가 여러 개여서 reducer를 여러개 등록해야 하는 경우 key값을 설정해서 리듀서 맵을 생성.
+  ```js
+  const store = configureStore({
+    reducer: {
+      counter: counterSlice.reducer,
+      //... slice 의 reducer 추가
+    },
+  });
+  ```
+  그러면 configureStore이 모든 리듀서를 하나의 큰 리듀서로 병합함.
+
+### action
+
+createSlice 함수의 리듀서 영역에 있는 메서드 명과 일치해야함.  
+리듀서 메서드에 접근할 필요 없이 redux-toolkit에 의해서 자동으로 메서드가 생성되고 이 메서드가 호출도면 액션 객체가 생성됨. 그래서 액션 식별자에 신경쓸 필요 없어짐.
+
+```js
+counterSlice.actions.toggleCounter();
+```

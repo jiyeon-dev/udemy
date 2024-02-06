@@ -124,3 +124,7 @@ Projects from Udemy Lectures
 - Project #13 Redux basic start [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/13-redux-basic-start)
 
   - Learn Redux
+
+- Project #14 advanced-redux [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/14-advanced-redux)
+
+  - Handling Async Tasks with redux
