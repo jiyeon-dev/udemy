@@ -129,6 +129,11 @@ Projects from Udemy Lectures
 
   - Handling Async Tasks with redux
 
-- Project # 15 react-router [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/15-react-router)
+- Project #15 react-router [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/15-react-router)
 
   - Learn React-router-dom
+
+- Project #16 event-site-react-router [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/16-event-site-react-router)
+
+  - Learn React-router-dom (2)
+  - Building Event Site
