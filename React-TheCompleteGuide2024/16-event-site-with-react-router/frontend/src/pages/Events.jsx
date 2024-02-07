@@ -1,22 +1,30 @@
-import { json, useLoaderData } from "react-router-dom";
+import { Await, defer, json, useLoaderData } from "react-router-dom";
 import EventsList from "../components/EventsList";
+import { Suspense } from "react";
 
 export default function EventsPage() {
-  const data = useLoaderData();
-
-  // if (data.isError) {
-  //   return <p>{data.message}</p>;
-  // }
-  const events = data.events;
+  const { events } = useLoaderData();
 
   return (
-    <>
-      <EventsList events={events} />
-    </>
+    <Suspense fallback={<p style={{ textAlign: "center" }}>Loading...</p>}>
+      <Await resolve={events}>
+        {(loadedEvents) => <EventsList events={loadedEvents} />}
+      </Await>
+    </Suspense>
   );
+  // // if (data.isError) {
+  // //   return <p>{data.message}</p>;
+  // // }
+  // const events = data.events;
+
+  // return (
+  //   <>
+  //     <EventsList events={events} />
+  //   </>
+  // );
 }
 
-export async function loader() {
+const loadEvents = async () => {
   const response = await fetch("http://localhost:8080/events");
   if (!response.ok) {
     // return { isError: true, message: "Could not fetch events" };
@@ -27,9 +35,19 @@ export async function loader() {
     // throw new Error("Could not fetch");
     throw json({ message: "Could not fetch events." }, { status: 500 });
   } else {
-    return response;
+    // return response;
+
+    const resData = await response.json();
+    return resData.events;
+
     // const resData = await response.json();
     // const res = new Response(resData.events, { status: 201 });
     // return res;
   }
+};
+
+export function loader() {
+  return defer({
+    events: loadEvents(),
+  });
 }
