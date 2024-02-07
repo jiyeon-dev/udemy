@@ -137,3 +137,8 @@ Projects from Udemy Lectures
 
   - Learn React-router-dom (2)
   - Building Event Site
+
+- Project #17 authentication [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/17-authentication)
+
+  - Learn How Authentication works in React Apps
+  - Adding Auth Persistence & Auto-Logout
