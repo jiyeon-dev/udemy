@@ -1,4 +1,4 @@
-import { Form, useNavigate } from "react-router-dom";
+import { Form, useNavigate, useNavigation } from "react-router-dom";
 
 import classes from "./EventForm.module.css";
 
@@ -7,6 +7,9 @@ function EventForm({ method, event }) {
   function cancelHandler() {
     navigate("..");
   }
+
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === "submitting";
 
   return (
     <Form method='post' className={classes.form}>
@@ -51,10 +54,10 @@ function EventForm({ method, event }) {
         />
       </p>
       <div className={classes.actions}>
-        <button type='button' onClick={cancelHandler}>
+        <button type='button' onClick={cancelHandler} disabled={isSubmitting}>
           Cancel
         </button>
-        <button>Save</button>
+        <button>{isSubmitting ? "Submitting..." : "Save"}</button>
       </div>
     </Form>
   );
