@@ -177,7 +177,7 @@ function handleSubmit(formData) {
 
 ## QueryClient
 
-- invalidateQueries: 쿼리 무효화 [[Docs](https://tanstack.com/query/latest/docs/framework/react/guides/query-invalidation#query-matching-with-invalidatequeries)]
+- **invalidateQueries**: 쿼리 무효화 [[Docs](https://tanstack.com/query/latest/docs/framework/react/guides/query-invalidation#query-matching-with-invalidatequeries)]
 
   - 특정 쿼리로 가져왔던 데이터가 오래되었으니 **만료시키고 _즉시_ 다시 가져오기를 트리거**해야한다고 tanstack쿼리에게 알려줌.
   - queryKey: 트리거할 쿼리의 쿼리키
@@ -194,7 +194,7 @@ function handleSubmit(formData) {
   queryClient.invalidateQueries({ queryKey: [키 값], refetchType: 'none' });  // 즉시 트리거되지 않도록 설정
   ```
 
-- getQueryData: 현재 캐시에 저장된 데이터 갖고옴
+- **getQueryData**: 현재 캐시에 저장된 데이터 갖고옴
 
   - queryKey: 갖고올 데이터의 쿼리 키
 
@@ -202,7 +202,7 @@ function handleSubmit(formData) {
   const data = queryClient.getQueriesData(["events", id]);
   ```
 
-- setQueryData: 캐시에 저장된 데이터 직접 수정 가능.
+- **setQueryData**: 캐시에 저장된 데이터 직접 수정 가능.
 
   - queryKey: 수정하려는 쿼리 데이터의 키
   - updater: 해당 쿼리 키에 저장하려는 새 데이터
@@ -212,12 +212,19 @@ function handleSubmit(formData) {
   queryClient.setQueryData(["events", id], data.event);
   ```
 
-- cancelQueries: 특정 키의 모든 활성화되어 있는 쿼리 취소 (Promise)
+- **cancelQueries**: 특정 키의 모든 활성화되어 있는 쿼리 취소 (Promise)
+
   - queryKey: 쿼리 데이터의 키
   - options
+
   ```jsx
   await queryClient.cancelQueries({ queryKey: ["events", id] });
   ```
+
+- **fetchQuery**: queryClient로 쿼리 전송. (useQuery랑 같음)
+  - useQuery와 동일한 구성 객체를 사용
+  - loader에서 fetchQuery를 사용한 경우 컴포넌트 내 useQuery를 지워야하는거 아닌가?
+    - loader에서 fetchQuery를 사용하면 tanstack쿼리가 해당 요청을 보내고 응답 데이터가 캐시에 저장됨. 그리고 컴포넌트에서 useQuery가 실행되면 캐시된 데이터를 불러오기 때문에 fetchQuery를 사용했다고 해도 컴포넌트 안 useQuery를 안 지우는게 좋음. 왜냐하면 useQuery는 다른 창 이동 후 다시오면 업데이트된 데이터를 자동으로 트리거해주기 때문에
 
 ## 낙관적 업데이트(Optimistic Update)
 

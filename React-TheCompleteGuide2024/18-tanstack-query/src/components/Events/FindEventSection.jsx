@@ -13,7 +13,7 @@ export default function FindEventSection() {
     // ref.current.value 하면 검색을 해도 컴포넌트가 리렌더링 되지 않기 때문에 값이 동적으로 안바뀐다.
     // 그래서 state를 추가로 선언하여 검색을 누르면 searchTerm값을 변경하여 리렌더링한 후 queryKey, queryFn의 전달 값도 변경되도록 state 값으로 설정함.
     queryKey: ["events", { search: searchTerm }],
-    queryFn: ({ signal }) => fetchEvents({ signal, searchTerm }),
+    queryFn: ({ signal, queryKey }) => fetchEvents({ signal, ...queryKey[1] }),
     enabled: searchTerm !== undefined,
   });
 
