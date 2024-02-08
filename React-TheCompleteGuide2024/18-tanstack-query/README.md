@@ -76,15 +76,15 @@ export default function App() {
     - signal: AbortSignal 을 의미 (네트워크 요청을 중간에 중단시킬 수 있는 장치). GET요청 시 signal옵션을 넣어주면 컴포넌트 unmount시 자동으로 네트워크 취소됨
       > 모든 GET요청에 Abort Signal을 넣으면 작업부하를 올릴뿐 바람직하지 않음. 동영상 다운로드같은 대용량 fetching이 아닌이상 대부분의 GET요청을 빠르게 완료 및 캐싱되기 때문에 성능에 유의미한 영향을 끼치지 못하기 때문.
 - **queryKey**: 쿼리 키(배열)
-  - useQuery사용할 때 모든 쿼리를 전송하는 모든 GET HTTP요청에는 쿼리 키가 있음.
-  - tanstack 쿼리는 내부에서 이 쿼리 키를 이용해 요청으로 `생성된 데이터를 캐시 처리`함. 그래서 나중에 동일한 요청을 전송하면 이전 요청의 응답을 재사용 가능.
+  - useQuery사용할 때 모든 쿼리를 전송하는 모든 HTTP요청에는 쿼리 키가 있음.
+  - tanstack 쿼리는 내부에서 이 쿼리 키를 이용해 요청으로 `생성된 데이터를 캐시 처리`함. 그래서 나중에 동일한 키로 요청을 전송하면 캐싱된 이전 요청의 응답을 재사용 가능.
   - 배열이기 때문에 여러개 키 입력 가능. 문자열 뿐만 아니라 중첩 배열, 객체 등 키 가능.
 - **staleTime**: 캐시에 데이터가 있을 때 업데이트된 데이터를 가져오기 위한 추가 요청을 전송하기 전 기다릴 시간 설정(단위 : ms)
   - 기본 값 : 0
   - 예) 5000으로 설정한 경우 → 데이터 캐싱된 후 5초 지난 다음 추가 요청 전송
     페이지 로딩 된 후 5초 이내에 페이지를 재 렌더링하는 경우 staleTime이 5초로 되어 있기 때문에 쿼리 재요청X, 하지만 캐싱된지 5초가 지난 후 페이지 재 렌더링하면 재요청함.
 - **gcTime**: 가비지 컬렉션 시간 설정(단위 : ms)
-  - 기본 값 : 5분
+  - 기본 값 : 300000
   - 설정 시간 만큼만 캐시에 데이터를 저장한 후 폐기함.
 - **enabled**(boolean): false인 경우 쿼리가 비활성화되어 요청이 전송되지 않음.
   - 기본 값 : true
@@ -142,6 +142,14 @@ HTTP 요청을 전송하고 **데이터를 변경**하는 쿼리에 최적화.
   - POST로 전달할 데이터가 필요하지만, 이곳에 익명함수로 데이터를 전달할 필요 없음. 그냥 함수 값만 전달
 - mutationKey: 반드시 필요하진 않음. (응답 데이터는 캐시처리 하지 않기 때문에)
 - **onSuccess**(function): 데이터 전송 후 변경에 성공하면 실행.
+- **onMutate**(function): mutate호출 즉시 실행됨. 프로세스가 완료되기 전 즉 서버로 부터 응답 받기 전에 실행됨.
+  - 현재 캐시에 저장된 데이터를 QueryClient를 이용해 가져와서 수정 편집 가능.
+  - 만약 return하는 데이터가 있는 경우 onError, onSettled 함수에서 해당 값을 받을 수 있음.
+- onError(function): 실패했을 때 실행.
+  - error: 에러 정보
+  - data: mutate 호출할 때 전달한 데이터
+  - context: onMutate에서 리턴한 데이터
+- onSettled(function): 성공여부와 상관 없이 mutation이 완료될때마다 호출됨.
 
 ### [응답 데이터 - 객체]
 
@@ -185,3 +193,61 @@ function handleSubmit(formData) {
   queryClient.invalidateQueries({ queryKey: [키 값], exact });  // queryKey가 완전히 일치하는 쿼리만 무효화
   queryClient.invalidateQueries({ queryKey: [키 값], refetchType: 'none' });  // 즉시 트리거되지 않도록 설정
   ```
+
+- getQueryData: 현재 캐시에 저장된 데이터 갖고옴
+
+  - queryKey: 갖고올 데이터의 쿼리 키
+
+  ```jsx
+  const data = queryClient.getQueriesData(["events", id]);
+  ```
+
+- setQueryData: 캐시에 저장된 데이터 직접 수정 가능.
+
+  - queryKey: 수정하려는 쿼리 데이터의 키
+  - updater: 해당 쿼리 키에 저장하려는 새 데이터
+  - options
+
+  ```jsx
+  queryClient.setQueryData(["events", id], data.event);
+  ```
+
+- cancelQueries: 특정 키의 모든 활성화되어 있는 쿼리 취소 (Promise)
+  - queryKey: 쿼리 데이터의 키
+  - options
+  ```jsx
+  await queryClient.cancelQueries({ queryKey: ["events", id] });
+  ```
+
+## 낙관적 업데이트(Optimistic Update)
+
+사용자 경험을 향상시키기 위해 사용되는 개념  
+mutation 작업을 할 때 서버의 응답이 오기 전에 상태를 먼저 바꾸고, 업데이트된 상태를 화면에 반영하는 방식  
+즉, **화면 먼저 바꾸고 서버에 응답 받으면 상태 비교하고 반영**
+
+```jsx
+const { mutate } = useMutation({
+  mutationFn: updateEvent,
+  onMutate: async (data) => {
+    // 퀴리요청을 취소하여 이전 서버 데이터가 낙관적 업데이트를 덮어쓰지 않도록 함 -> refetch 취소시킴
+    await queryClient.cancelQueries({ queryKey: ["events", id] });
+
+    // 실패한 경우 롤백을 위해 변경 전 데이터 저장 (스냅샷)
+    const previousEvent = queryClient.getQueryData(["events", id]);
+
+    // 캐시에 저장된 데이터를 새로운 데이터로 변경
+    queryClient.setQueryData(["events", id], data.event);
+
+    // 스냅샷 전달
+    return { previousEvent };
+  },
+  onError: (error, data, context) => {
+    // 에러가 발생한 경우 전달받은 스냅샷으로 덮어씌움 (롤백)
+    queryClient.setQueryData(["events", id], context.previousEvent);
+  },
+  onSettled: () => {
+    // 성공여부와 상관없이 기존 데이터를 무효화하여, 데이터 useQuery실행하여 서버에 있는 데이터와 현재 프론트에 있는 데이터가 동일한지 비교(백엔드 서버와 프론트 데이터 동기화)
+    queryClient.invalidateQueries(["events", id]);
+  },
+});
+```
