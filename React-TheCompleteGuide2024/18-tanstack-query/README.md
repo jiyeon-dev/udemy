@@ -175,6 +175,18 @@ function handleSubmit(formData) {
 }
 ```
 
+## useIsFetching
+
+tanstack 쿼리가 애플리케이션 어딘가에서 데이터를 가져오는지 확인할 수 있는 값을 받음.
+
+- 0 : 데이터를 갖고 오지 않음.
+- 0 < x : 데이터를 갖고 옴.
+
+```jsx
+const fetching = useIsFetching();
+return <div id='main-header-loading'>{fetching > 0 && <progress />}</div>;
+```
+
 ## QueryClient
 
 - **invalidateQueries**: 쿼리 무효화 [[Docs](https://tanstack.com/query/latest/docs/framework/react/guides/query-invalidation#query-matching-with-invalidatequeries)]
