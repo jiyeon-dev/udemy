@@ -142,3 +142,9 @@ Projects from Udemy Lectures
 
   - Learn How Authentication works in React Apps
   - Adding Auth Persistence & Auto-Logout
+
+- Project #18 tanstack-query [source](https://github.com/jiyeon-dev/udemy/tree/main/React-TheCompleteGuide2024/18-tanstack-query)
+
+  - Configuring Tanstack Query
+  - Fetching & Mutating Data
+  - Advanced Concepts: Cache Invalidation, Optimistic Updating & More
