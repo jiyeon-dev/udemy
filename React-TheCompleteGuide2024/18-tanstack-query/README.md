@@ -89,6 +89,12 @@ export default function App() {
 - **enabled**(boolean): false인 경우 쿼리가 비활성화되어 요청이 전송되지 않음.
   - 기본 값 : true
   - 쿼리가 비활성화되면 tanstack쿼리가 상태를 대기중으로 처리했기 때문에 isPending값이 true가 됨 (데이터가 없으니 데이터가 오기를 (활성화되기를) 기다리고 있기 때문에 대기중인 상태로 표시되는 것임.)
+- initialData: 초기 데이터 설정
+  - 함수도 가능. (쿼리가 초기화될 때 한 번만 실행되어 귀중한 메모리 및/또는 CPU를 절약)
+  - 앱에서 사용 가능한 초기 데이터가 있으면 설정 가능. 이 값이 캐시에 저장되어 초기 로딩 상태를 건너 뜀. 따라서, staleTime값이 설정되어 있는 경우 그 시간이 지나기 전까지 응답받은 데이터로 변경되지 않음.
+  - staleTime 값과 함께 설정하고 싶은 경우 "initialDataUpdatedAt"을 이용.
+- initialDataUpdatedAt: 초기 데이터 마지막 업데이트된 기간 설정
+- PlaceholderData: initialData와 같이 초기 데이터를 설정하지만 캐시에 저장하진 않음
 
 ### [응답 데이터 - 객체]
 
@@ -125,7 +131,7 @@ const { data, isLoading, isError, error } = useQuery({
 ## useMutation
 
 [[Docs](https://tanstack.com/query/v5/docs/framework/react/reference/useMutation)]
-HTTP POST요청을 전송하고 **데이터를 변경**하는 쿼리에 최적화.
+HTTP 요청을 전송하고 **데이터를 변경**하는 쿼리에 최적화.
 
 - 컴포넌트가 렌더링될 때 useQuery와는 달리 요청 즉시 전송되지 않도록 가능. handleSubmit 함수에서 전송하는 등과 같은 **필요할 때만 전송되도록** 가능
 - useQuery로도 POST 전송 가능하긴 함.
@@ -163,13 +169,19 @@ function handleSubmit(formData) {
 
 ## QueryClient
 
-- invalidateQueries: 쿼리 무효화
-  - 특정 쿼리로 가져왔던 데이터가 오래되었으니 **만료시키고 즉시 다시 가져오기를 트리거**해야한다고 tanstack쿼리에게 알려줌.
+- invalidateQueries: 쿼리 무효화 [[Docs](https://tanstack.com/query/latest/docs/framework/react/guides/query-invalidation#query-matching-with-invalidatequeries)]
+
+  - 특정 쿼리로 가져왔던 데이터가 오래되었으니 **만료시키고 _즉시_ 다시 가져오기를 트리거**해야한다고 tanstack쿼리에게 알려줌.
   - queryKey: 트리거할 쿼리의 쿼리키
     - 이 키 값이 포함된 모든 쿼리를 무효화함. 완전히 일치하지 않아도 됨.
     - 만약 ['events', 'image']를 키값으로 갖는 쿼리가 있고, invalidateQueries({ queryKey: ['events']}) 를 하면 이 쿼리도 무효화됨
   - exact: queryKey가 완전히 일치하는 경우에만 무효화함.
+  - refetchType [[참고](https://tanstack.com/query/latest/docs/reference/QueryClient#queryclientinvalidatequeries)]
+    - 기본 값 : active
+    - none: 기존 쿼리가 즉시 자동으로 트리거되지 않도록 함. 기존 쿼리는 무효화되지만 다음번 요청(예, 리렌더링)될 때 다시 실행됨.
+
   ```jsx
   queryClient.invalidateQueries({ queryKey: [키 값] });  // 키 값 포함하는 모든 쿼리 무효화
   queryClient.invalidateQueries({ queryKey: [키 값], exact });  // queryKey가 완전히 일치하는 쿼리만 무효화
+  queryClient.invalidateQueries({ queryKey: [키 값], refetchType: 'none' });  // 즉시 트리거되지 않도록 설정
   ```
