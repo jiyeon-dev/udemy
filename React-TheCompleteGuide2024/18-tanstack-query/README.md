@@ -23,18 +23,34 @@
 
 - 예) 상세 페이지 갔다가 목록으로 돌아오면 목록 데이터를 다시 서버에서 불러오는 것이 아닌 캐시에 저장되어 있는 데이터가 불러와짐.
 
-## Provider 설정
+## 설치
+
+```bash
+$ npm i @tanstack/react-query
+$ npm i @tanstack/react-query-devtools
+```
+
+## Provider, DevTools 설정
+
+**[DevTools]**
+
+- DevTools는 개발 시(dev)에만 보임
+- QueryClientProvider 안에 ReactQueryDevtools 컴포넌트 추가.
+- initialIsOpen(boolean): true 인 경우 처음부터 devtools가 열려있음.
+  - 기본값: false
 
 ```jsx
 // App.jsx
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-const queryClient = new QueryClient();
+export const queryClient = new QueryClient(); // 앱 내에서 동일한 queryClient 사용을 위해.
 
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }
@@ -45,9 +61,9 @@ export default function App() {
 ## useQuery
 
 [[Docs](https://tanstack.com/query/v5/docs/framework/react/reference/useQuery)]
-자체적으로 작동해서 HTTP 요청을 전송하고 데이터를 갖고오고 로딩에 대한 상태 정보도 제공함.
+자체적으로 작동해서 HTTP 요청을 전송하고 **데이터를 갖고**오고 로딩에 대한 상태 정보도 제공함.
 
-[전달 데이터 - 객체]
+### [전달 데이터 - 객체]
 
 - **queryFn**: HTTP요청에 전송할 실제 코드
   - tanstack은 HTTP요청을 전송하는 로직이 내장되어 있지 않음. 대신 요청 관련 데이터 및 발생 가능한 오류 추적등 요청을 관리하는 로직을 제공함.
@@ -74,7 +90,7 @@ export default function App() {
   - 기본 값 : true
   - 쿼리가 비활성화되면 tanstack쿼리가 상태를 대기중으로 처리했기 때문에 isPending값이 true가 됨 (데이터가 없으니 데이터가 오기를 (활성화되기를) 기다리고 있기 때문에 대기중인 상태로 표시되는 것임.)
 
-[응답 데이터 - 객체]
+### [응답 데이터 - 객체]
 
 - data: 실제 응답 데이터 값
 - isPending(boolean): 데이터 요청 중인지 체크
@@ -85,6 +101,8 @@ export default function App() {
 - error: 발생한 오류에 대한 정보 (message, name, stack)
 - refetch(function): 동일한 쿼리 수동으로 호출
 
+### [예제]
+
 ```jsx
 import { useQuery } from "@tanstack/react-query";
 
@@ -94,4 +112,64 @@ const { data, isPending, isError, error } = useQuery({
   // staleTime: 5000,  // 5초
   // gcTime: 1000, // 1초
 });
+
+// example)
+const [searchTerm, setSearchTerm] = useState(undefined);
+const { data, isLoading, isError, error } = useQuery({
+  queryKey: ["events", { search: searchTerm }],
+  queryFn: ({ signal }) => fetchEvents({ signal, searchTerm }),
+  enabled: searchTerm !== undefined,
+});
 ```
+
+## useMutation
+
+[[Docs](https://tanstack.com/query/v5/docs/framework/react/reference/useMutation)]
+HTTP POST요청을 전송하고 **데이터를 변경**하는 쿼리에 최적화.
+
+- 컴포넌트가 렌더링될 때 useQuery와는 달리 요청 즉시 전송되지 않도록 가능. handleSubmit 함수에서 전송하는 등과 같은 **필요할 때만 전송되도록** 가능
+- useQuery로도 POST 전송 가능하긴 함.
+
+### [전달 데이터 - 객체]
+
+- **mutationFn**:
+  - POST로 전달할 데이터가 필요하지만, 이곳에 익명함수로 데이터를 전달할 필요 없음. 그냥 함수 값만 전달
+- mutationKey: 반드시 필요하진 않음. (응답 데이터는 캐시처리 하지 않기 때문에)
+- **onSuccess**(function): 데이터 전송 후 변경에 성공하면 실행.
+
+### [응답 데이터 - 객체]
+
+- data: 전송된 요청의 응답 데이터
+- **mutate**(function): 쿼리 호출하는 함수.
+  - 인자1: 데이터(variable)
+  - 인자2: 옵션(option)
+- isPending
+- isError
+- error
+- isSuccess
+
+### [예제]
+
+```jsx
+import { useMutation } from "@tanstack/react-query";
+
+const { mutate, isPending, isError, error } = useMutation({
+  mutationFn: createNewEvent,
+});
+function handleSubmit(formData) {
+  mutate({ event: formData });
+}
+```
+
+## QueryClient
+
+- invalidateQueries: 쿼리 무효화
+  - 특정 쿼리로 가져왔던 데이터가 오래되었으니 **만료시키고 즉시 다시 가져오기를 트리거**해야한다고 tanstack쿼리에게 알려줌.
+  - queryKey: 트리거할 쿼리의 쿼리키
+    - 이 키 값이 포함된 모든 쿼리를 무효화함. 완전히 일치하지 않아도 됨.
+    - 만약 ['events', 'image']를 키값으로 갖는 쿼리가 있고, invalidateQueries({ queryKey: ['events']}) 를 하면 이 쿼리도 무효화됨
+  - exact: queryKey가 완전히 일치하는 경우에만 무효화함.
+  ```jsx
+  queryClient.invalidateQueries({ queryKey: [키 값] });  // 키 값 포함하는 모든 쿼리 무효화
+  queryClient.invalidateQueries({ queryKey: [키 값], exact });  // queryKey가 완전히 일치하는 쿼리만 무효화
+  ```
